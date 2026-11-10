@@ -1,5 +1,5 @@
 ol.proj.proj4.register(proj4);
-//ol.proj.get("EPSG:4326").setExtent([-23.673316, 19.525836, 12.248797, 38.736064]);
+//ol.proj.get("EPSG:4326").setExtent([-24.063409, 19.418736, 11.858704, 38.628963]);
 var wms_layers = [];
 
 var format_Limites_MAR_0 = new ol.format.GeoJSON();
@@ -39,9 +39,13 @@ var jsonSource_Aeroports_2 = new ol.source.Vector({
     attributions: ' ',
 });
 jsonSource_Aeroports_2.addFeatures(features_Aeroports_2);
+cluster_Aeroports_2 = new ol.source.Cluster({
+  distance: 30,
+  source: jsonSource_Aeroports_2
+});
 var lyr_Aeroports_2 = new ol.layer.Vector({
                 declutter: false,
-                source:jsonSource_Aeroports_2, 
+                source:cluster_Aeroports_2, 
                 style: style_Aeroports_2,
                 popuplayertitle: 'Aeroports',
                 interactive: true,
@@ -49,7 +53,7 @@ var lyr_Aeroports_2 = new ol.layer.Vector({
             });
 var group_carteaeroport = new ol.layer.Group({
                                 layers: [lyr_Limites_MAR_0,lyr_Regions_MAR_1,lyr_Aeroports_2,],
-                                fold: 'close',
+                                fold: 'open',
                                 title: 'carte aeroport'});
 
 lyr_Limites_MAR_0.setVisible(true);lyr_Regions_MAR_1.setVisible(true);lyr_Aeroports_2.setVisible(true);
@@ -57,12 +61,12 @@ var layersList = [group_carteaeroport];
 lyr_Limites_MAR_0.set('fieldAliases', {'OBJECTID': 'OBJECTID', });
 lyr_Regions_MAR_1.set('fieldAliases', {'OBJECTID': 'OBJECTID', 'CODE_REGIO': 'CODE_REGIO', 'Nom_Region': 'Nom_Region', 'Population': 'Population', 'Menages': 'Menages', 'Etrangers': 'Etrangers', 'Marocains': 'Marocains', 'Non_ar': 'Non_ar', });
 lyr_Aeroports_2.set('fieldAliases', {'Nom_fr': 'Nom_fr', 'Nom_ar': 'Nom_ar', 'iata': 'iata', 'Capacite_A': 'Capacite_A', 'Capacite_1': 'Capacite_1', 'Capacite_2': 'Capacite_2', });
-lyr_Limites_MAR_0.set('fieldImages', {'OBJECTID': '', });
+lyr_Limites_MAR_0.set('fieldImages', {'OBJECTID': 'TextEdit', });
 lyr_Regions_MAR_1.set('fieldImages', {'OBJECTID': 'TextEdit', 'CODE_REGIO': 'TextEdit', 'Nom_Region': 'TextEdit', 'Population': 'TextEdit', 'Menages': 'TextEdit', 'Etrangers': 'TextEdit', 'Marocains': 'TextEdit', 'Non_ar': 'TextEdit', });
 lyr_Aeroports_2.set('fieldImages', {'Nom_fr': 'TextEdit', 'Nom_ar': 'TextEdit', 'iata': 'TextEdit', 'Capacite_A': 'TextEdit', 'Capacite_1': 'TextEdit', 'Capacite_2': 'TextEdit', });
-lyr_Limites_MAR_0.set('fieldLabels', {'OBJECTID': 'no label', });
-lyr_Regions_MAR_1.set('fieldLabels', {'OBJECTID': 'header label - visible with data', 'CODE_REGIO': 'hidden field', 'Nom_Region': 'inline label - always visible', 'Population': 'inline label - always visible', 'Menages': 'hidden field', 'Etrangers': 'hidden field', 'Marocains': 'hidden field', 'Non_ar': 'inline label - always visible', });
-lyr_Aeroports_2.set('fieldLabels', {'Nom_fr': 'inline label - always visible', 'Nom_ar': 'inline label - always visible', 'iata': 'no label', 'Capacite_A': 'no label', 'Capacite_1': 'inline label - always visible', 'Capacite_2': 'inline label - always visible', });
+lyr_Limites_MAR_0.set('fieldLabels', {'OBJECTID': 'hidden field', });
+lyr_Regions_MAR_1.set('fieldLabels', {'OBJECTID': 'no label', 'CODE_REGIO': 'hidden field', 'Nom_Region': 'inline label - always visible', 'Population': 'inline label - always visible', 'Menages': 'hidden field', 'Etrangers': 'no label', 'Marocains': 'no label', 'Non_ar': 'no label', });
+lyr_Aeroports_2.set('fieldLabels', {'Nom_fr': 'inline label - always visible', 'Nom_ar': 'inline label - always visible', 'iata': 'hidden field', 'Capacite_A': 'hidden field', 'Capacite_1': 'inline label - always visible', 'Capacite_2': 'header label - visible with data', });
 lyr_Aeroports_2.on('precompose', function(evt) {
     evt.context.globalCompositeOperation = 'normal';
 });
